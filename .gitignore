@@ -1,0 +1,11 @@
+/assets/scripts/js/*
+/bin/
+/docs/
+/lib/
+/.shards/
+*.dwarf
+
+core
+Dockerfile
+
+!**/.keep

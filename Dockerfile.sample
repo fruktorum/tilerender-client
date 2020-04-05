@@ -1,0 +1,30 @@
+FROM <find_an_Alpine_Crystal_or_build_it> AS build
+CMD [ "/build/app" ]
+
+RUN apk --no-cache add npm && \
+    npm i -g coffeescript
+
+COPY shard.* ./
+RUN shards install
+
+COPY . .
+
+RUN mkdir -p /build assets/scripts/js && crystal build -o /build/app src/socket_canvas.cr && \
+    mv docker/compile-coffee.sh /usr/bin/cfe.sh && \
+    chown root:root /usr/bin/cfe.sh && \
+    chmod +x /usr/bin/cfe.sh
+
+FROM build AS release
+RUN npm i -D uglify-js babel-cli babel-preset-env && \
+    echo '{"presets": ["env"]}' > .babelrc && \
+    \
+    /usr/bin/cfe.sh && \
+    node_modules/.bin/babel src assets/scripts/js/main.js | node_modules/.bin/uglifyjs > assets/scripts/js/main2.js && \
+    mv assets/scripts/js/main2.js assets/scripts/js/main.js && \
+    rm -rf node_modules && \
+    \
+    crystal build --no-debug --release --static --stats -o /build/app src/socket_canvas.cr
+
+FROM scratch
+CMD [ "/app" ]
+COPY --from=release /build/app /app

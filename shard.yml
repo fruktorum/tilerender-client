@@ -1,0 +1,12 @@
+name: socket-iface-client
+version: 0.1.0
+crystal: 0.34.0-dev
+
+authors:
+  - SlayerShadow <gawfast@gmail.com>
+
+targets:
+  socket-canvas:
+    main: src/socket-canvas.cr
+
+license: MIT

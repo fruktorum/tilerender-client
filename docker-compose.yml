@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  dev:
+    image: socket-iface-client:dev
+    build:
+      context: .
+      target: build
+    init: true
+    ports: [ '9000:80' ]
+    volumes: [ '.:/app' ]
+    environment:
+      WS_HOST: localhost
+      WS_PORT: 3300
+
+  app:
+    image: socket-iface-client
+    build: .
+    init: true
+    ports: [ '9000:80' ]
+    environment:
+      WS_HOST: localhost
+      WS_PORT: 3300
