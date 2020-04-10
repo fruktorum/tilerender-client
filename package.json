@@ -1,0 +1,20 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Socket Graphics",
+  "main": "assets/scripts/js/main.js",
+  "scripts": {
+    "compile": "cat assets/scripts/coffee/*.coffee | coffee -sc > assets/scripts/js/main.js",
+    "transpile": "babel src assets/scripts/js/main.js > assets/scripts/js/main2.js && mv assets/scripts/js/main2.js assets/scripts/js/main.js",
+    "uglify": "uglifyjs assets/scripts/js/main.js --compress --mangle -o assets/scripts/js/main2.js && mv assets/scripts/js/main2.js assets/scripts/js/main.js"
+  },
+  "author": "SlayerShadow",
+  "license": "MIT",
+  "devDependencies": {
+    "uglify-js": "*",
+    "babel-cli": "*",
+    "babel-preset-env": "*",
+    "coffeescript": "*"
+  },
+  "dependencies": {}
+}

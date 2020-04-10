@@ -59,7 +59,7 @@ class Field
 		console.log 'Field dimensions reset', @width, @height unless window.Config.production
 
 	updateBackground: (x, y, color) =>
-		if x < 0 || y < 0 || x > @tileWidth - 1 || y > @tileHeight - 1
+		if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
 			console.error "Background index out of bounds"
 			return
 
@@ -75,7 +75,7 @@ class Field
 		console.log 'Update background color', x: x, y: y, color: color unless window.Config.production
 
 	addEntity: (x, y, color) =>
-		if x < 0 || y < 0 || x > @tileWidth - 1 || y > @tileHeight - 1
+		if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
 			console.error "Entity index out of bounds"
 			return
 

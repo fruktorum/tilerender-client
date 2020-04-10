@@ -27,7 +27,7 @@ server = HTTP::Server.new do |context|
 			String.build{|string|
 				string << HTML_HEADERS
 
-				if ( compile_result = `cfe.sh 2>/dev/stdout` ).empty?
+				if ( compile_result = `npm run compile 1>/dev/null 2>/dev/stdout` ).empty?
 					body = %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
 
 					string << HTML_SCRIPT_START

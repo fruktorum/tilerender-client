@@ -1,6 +1,8 @@
+assets/scripts/js
 bin
 lib
-assets/scripts/js
+node_modules
+websockify
 
 core
 Dockerfile*

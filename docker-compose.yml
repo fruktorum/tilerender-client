@@ -21,3 +21,17 @@ services:
     environment:
       WS_HOST: localhost
       WS_PORT: 3300
+
+  wsproxy:
+    image: socket-iface-client/wsproxy
+    build: websockify
+    ports: [ '3300:3300' ]
+    networks: [ websockify ]
+    environment:
+      TCP_SERVER_HOST: $TCP_SERVER_HOST
+      TCP_SERVER_PORT: $TCP_SERVER_PORT
+
+networks:
+  websockify:
+    name: websockify-proxy
+    external: true

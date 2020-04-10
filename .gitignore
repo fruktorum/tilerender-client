@@ -2,10 +2,13 @@
 /bin/
 /docs/
 /lib/
+/node_modules/
 /.shards/
 *.dwarf
 
 core
 Dockerfile
+
+.env
 
 !**/.keep
