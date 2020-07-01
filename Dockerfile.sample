@@ -7,7 +7,7 @@ RUN npm i && npm audit fix && shards install --ignore-crystal-version
 
 COPY . .
 
-RUN mkdir -p /build assets/scripts/js && crystal build -o /build/app src/socket_canvas.cr
+RUN mkdir -p /build assets/scripts/js
 
 FROM build AS release
 RUN npm run compile && \
