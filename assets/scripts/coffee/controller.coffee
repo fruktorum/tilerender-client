@@ -21,8 +21,10 @@ class Controller
 		console.log "Code: #{ event.code }; reason: #{ event.reason }"
 
 	constructor: ->
+		host = window.location.href.split( '//' )[ 1 ].split( ':' )[ 0 ]
+
 		@buffer = new Buffer
-		@socket = new WebSocket "ws://#{ window.Config.host }:#{ window.Config.port }"
+		@socket = new WebSocket "ws://#{ host }:#{ window.Config.wsPort }"
 		@socket.binaryType = 'arraybuffer'
 		@socket.onopen = open
 		@socket.onclose = close

@@ -13,7 +13,7 @@ HTML_BODY_FINISH = "</body></html>"
 
 		string << HTML_HEADERS
 		string << HTML_SCRIPT_START
-		string << "window.Config={host:\"#{ ENV[ "WS_HOST" ] }\",port:\"#{ ENV[ "WS_PORT" ] }\",production:true};"
+		string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:true};"
 		string << {{ read_file "assets/scripts/js/main.js" }}
 		string << HTML_SCRIPT_FINISH
 		string << HTML_BODY_START << body << HTML_BODY_FINISH
