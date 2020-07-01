@@ -5,7 +5,7 @@ Renders graphics based on websocket binary commands into the canvas.
 ## Installation
 
 1. Install Docker, Docker Compose
-2. `docker-compose build`
+2. `docker-compose build app wsproxy`
 
 ## Usage
 

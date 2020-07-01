@@ -6,7 +6,6 @@ services:
     build:
       context: .
       target: build
-    init: true
     ports: [ '9000:80' ]
     volumes: [ '.:/app' ]
     environment:

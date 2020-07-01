@@ -3,7 +3,7 @@ CMD [ "/build/app" ]
 RUN apk --no-cache add npm
 
 COPY shard.* package*.json ./
-RUN npm i && npm audit fix && shards install
+RUN npm i && npm audit fix && shards install --ignore-crystal-version
 
 COPY . .
 

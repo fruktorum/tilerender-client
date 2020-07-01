@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.12
 CMD [ "sh", "-c", "websockify $WEBSOCKET_LISTENER_HOST:$WEBSOCKET_LISTENER_PORT $TCP_SERVER_HOST:$TCP_SERVER_PORT" ]
 
 ENV WEBSOCKET_LISTENER_HOST=0.0.0.0
@@ -21,5 +21,5 @@ RUN apk --no-cache add \
       pip3 install setuptools wheel numpy && \
       python3 setup.py install && \
     \
-    apk del build-base gcc gfortran git py3-pip python3-dev && \
+    apk del build-base gcc gfortran git python3-dev && \
     cd / && rm -rf /sources /tmp/*
