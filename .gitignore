@@ -8,7 +8,9 @@
 
 core
 Dockerfile
+Thumbs.db
 
+.DS_Store
 .env
 
 !**/.keep

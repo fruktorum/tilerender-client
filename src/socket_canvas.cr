@@ -27,11 +27,11 @@ server = HTTP::Server.new do |context|
 			String.build{|string|
 				string << HTML_HEADERS
 
-				if ( compile_result = `npm run compile 1>/dev/null 2>/dev/stdout` ).empty?
+				if ( compile_result = `npm run compile 1>/dev/null 2>/dev/stdout` ).empty? && ( compile_result = `npm run transpile 1>/dev/null 2>/dev/stdout` ).empty?
 					body = %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
 
 					string << HTML_SCRIPT_START
-					string << "window.Config={host:\"#{ ENV[ "WS_HOST" ] }\",port:\"#{ ENV[ "WS_PORT" ] }\",production:false};"
+					string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:false};"
 					string << File.read( "assets/scripts/js/main.js" )
 					string << HTML_SCRIPT_FINISH
 				else

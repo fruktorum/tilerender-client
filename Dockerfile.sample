@@ -1,5 +1,5 @@
 FROM <find_an_Alpine_Crystal_or_build_it> AS build
-CMD [ "/build/app" ]
+CMD [ "sh" ]
 RUN apk --no-cache add npm
 
 COPY shard.* package*.json ./

@@ -7,6 +7,6 @@ authors:
 
 targets:
   socket-canvas:
-    main: src/socket-canvas.cr
+    main: src/socket_canvas.cr
 
 license: MIT
