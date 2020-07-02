@@ -1,2 +1,2 @@
 require "spec"
-require "../src/socket-canvas"
+require "../src/socket_canvas"
