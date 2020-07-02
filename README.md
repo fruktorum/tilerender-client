@@ -14,14 +14,14 @@ The one thing is to connect `wsproxy` service with native socket server. Docker 
 
 1. Be sure that `TCP_SERVER_HOST` and `TCP_SERVER_PORT` is configured properly for wsproxy and connects to host and port of external socket server
 2. Please be sure that `dev` service is turned off (`docker-compose stop dev`)
-3. `docker-compose up -d app` - starts the service and listens on **9000** port
+3. `docker-compose up -d app` - starts the service and listens on **9000** port (open browser window on this port, ex.: `http://localhost:9000`)
 
 Do not start `app` and `dev` services simultaneously, they are interchangeable.
 
 Please keep in mind that:
 
-1. Websocket Proxy's **binding** host and port configures via environment variables in `docker-compose.yml` and is called `TCP_SERVER_HOST` and `TCP_SERVER_PORT`; there are no defaults for it
-2. Websocket Proxy's **listening** host and port configures via environment variables in `docker-compose.yml` and is called `WEBSOCKET_LISTENER_HOST` and `WEBSOCKET_LISTENER_PORT`; defaults are: `0.0.0.0`, `3300`
+1. Websocket Proxy's **binding** host and port configure via environment variables in `docker-compose.yml` and is called `TCP_SERVER_HOST` and `TCP_SERVER_PORT`; there are no defaults for it (this connects websocket proxy with TCP rendering server).
+2. Websocket Proxy's **listening** port configures via environment variables in `docker-compose.yml` and is called `WS_PORT`; default is: `3300` (this connects websocket proxy with browser). Host is taken from IP/domain name.
 
 ## Development
 
@@ -30,7 +30,7 @@ Please keep in mind that:
 1. Please be sure that `app` service is turned off (`docker-compose stop app`)
 2.
    1. If needed only the development of frontend coffee sources: `docker-compose up -d dev` - starts the service and listens on **9000** port
-   2. If needed the development of internal HTML or server sources itself: `docker-compose run --rm --service-ports dev sh` - launches the container session
+   2. If needed the development of internal HTML or server sources itself: `docker-compose run --rm --service-ports dev` - launches the container session
 
 Do not start `app` and `dev` services simultaneously, they are interchangeable.
 

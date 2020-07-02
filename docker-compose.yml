@@ -8,6 +8,7 @@ services:
       target: build
     ports: [ '9000:80' ]
     volumes: [ '.:/app' ]
+    depends_on: [ wsproxy ]
     environment:
       WS_PORT: 3300
 
@@ -16,6 +17,7 @@ services:
     build: .
     init: true
     ports: [ '9000:80' ]
+    depends_on: [ wsproxy ]
     environment:
       WS_PORT: 3300
 
@@ -31,4 +33,3 @@ services:
 networks:
   websockify:
     name: websockify-proxy
-    external: true
