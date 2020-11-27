@@ -31,4 +31,6 @@ class Buffer
 					@commandsBuffer.push @currentCommand
 					@currentCommand = []
 
+		return
+
 	fetch: -> do @commandsBuffer.shift

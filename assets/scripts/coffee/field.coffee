@@ -2,7 +2,7 @@ class Field
 	TileDensityThreshold = 4
 	DefaultColor = '#ffffff'
 
-	indexError = (entityType, x, y, width, height) -> console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"
+	indexError = (entityType, x, y, width, height) -> console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"; return
 
 	borders = (canvas, field) ->
 		field.fillStyle = '#808080'
@@ -13,6 +13,7 @@ class Field
 		field.lineTo canvas.width, 0
 		field.lineTo 0, 0
 		do field.stroke
+		return
 
 	line = (field, startX, startY, finishX, finishY, color) ->
 		field.fillStyle = color
@@ -20,6 +21,7 @@ class Field
 		field.moveTo startX, startY
 		field.lineTo finishX, finishY
 		do field.stroke
+		return
 
 	constructor: (@canvas) ->
 		@field = @canvas.getContext '2d'
@@ -30,40 +32,42 @@ class Field
 		@backgroundTiles = []
 
 		@field.fillStyle = DefaultColor
-		@field.fillRect x * @tileWidth + @offsetX, y * @tileHeight + @offsetY, @rectWidth, @rectHeight for y in [ 0 ... @height ] for x in [ 0 ... @width ]
+		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight for y in [ 0 ... @height ] for x in [ 0 ... @width ]
 
 		console.log 'Reset field' unless window.Config.production
+		return
 
 	clearField: =>
 		@clearTile x, y, false for y in [ 0 ... @height ] for x in [ 0 ... @width ]
 		console.log 'Clear field' unless window.Config.production
+		return
 
 	updateDimensions: (@width, @height) =>
-		return if @width <= 0 || @height <= 0
+		return indexError 'Dimensions', @width, @height, @width, @height if @width <= 0 || @height <= 0
 
 		@backgroundTiles = []
 
-		@canvas.width = window.innerWidth - 20
-		@canvas.height = window.innerHeight - 20
-
-		widthDelta = window.innerWidth / @width
-		heightDelta = window.innerHeight / @height
+		widthDelta = Math.floor window.innerWidth / @width
+		heightDelta = Math.floor window.innerHeight / @height
 
 		if widthDelta > heightDelta
-			@canvas.height = window.innerHeight - 20
-			@canvas.width = @canvas.height * @width / @height
+			@tileHeight = Math.floor ( window.innerHeight - 20 ) / @height
+			@tileWidth = Math.floor ( window.innerHeight - 20 ) / @height
 		else
-			@canvas.width = window.innerWidth - 20
-			@canvas.height = @canvas.width * @height / @width
+			@tileWidth = Math.floor ( window.innerWidth - 20 ) / @width
+			@tileHeight = Math.floor ( window.innerWidth - 20 ) / @width
 
-		@tileWidth = @canvas.width / @width
-		@tileHeight = @canvas.height / @height
+		@tileWidth = Math.max @tileWidth, 1
+		@tileHeight = Math.max @tileHeight, 1
 
-		@offsetX = if @tileWidth > TileDensityThreshold then 1 else 0
-		@offsetY = if @tileHeight > TileDensityThreshold then 1 else 0
+		offsetX = if @tileWidth > TileDensityThreshold then 1 else 0
+		offsetY = if @tileHeight > TileDensityThreshold then 1 else 0
 
-		@rectWidth = @tileWidth - @offsetX * 2
-		@rectHeight = @tileHeight - @offsetY * 2
+		@canvas.width = @tileWidth * @width + 2 - offsetX * 2
+		@canvas.height = @tileHeight * @height + 2 - offsetY * 2
+
+		@rectWidth = Math.max @tileWidth - offsetX * 2, 1
+		@rectHeight = Math.max @tileHeight - offsetY * 2, 1
 
 		borders @canvas, @field
 
@@ -78,31 +82,34 @@ class Field
 				line @field, 0, delimiter, @canvas.width, delimiter, '#808080'
 
 		console.log 'Field dimensions reset', @width, @height unless window.Config.production
+		return
 
 	updateBackground: (x, y, color) =>
-		if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
-			indexError 'Background', x, y, @width, @height
-			return
+		return indexError 'Background', x, y, @width, @height if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
 
 		@field.fillStyle = color
-		@field.fillRect x * @tileWidth + @offsetX, y * @tileHeight + @offsetY, @rectWidth, @rectHeight
+		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight
 
 		@backgroundTiles[ y ] ||= []
 		@backgroundTiles[ y ][ x ] = color
 
 		console.log 'Update background color', x: x, y: y, color: color unless window.Config.production
+		return
 
 	addEntity: (x, y, color) =>
-		if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
-			indexError 'Entity', x, y, @width, @height
-			return
+		return indexError 'Entity', x, y, @width, @height if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
 
 		@field.fillStyle = color
-		@field.fillRect x * @tileWidth + @offsetX, y * @tileHeight + @offsetY, @rectWidth, @rectHeight
+		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight
 
 		console.log 'Draw entity', x: x, y: y, color: color unless window.Config.production
+		return
 
 	clearTile: (x, y, log = !window.Config.production) =>
+		return indexError 'Clear', x, y, @width, @height if x < 0 || y < 0 || x > @width - 1 || y > @height - 1
+
 		@field.fillStyle = @backgroundTiles[ y ] && @backgroundTiles[ y ][ x ] || DefaultColor
-		@field.fillRect x * @tileWidth + @offsetX, y * @tileHeight + @offsetY, @rectWidth, @rectHeight
+		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight
+
 		console.log 'Clear tile', x, y if log
+		return

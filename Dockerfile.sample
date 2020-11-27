@@ -3,15 +3,13 @@ CMD [ "sh" ]
 RUN apk --no-cache add npm
 
 COPY shard.* package*.json ./
-RUN npm i && npm audit fix && shards install --ignore-crystal-version
-
-COPY . .
-
-RUN mkdir -p /build assets/scripts/js
+RUN mkdir -p /build assets/scripts/js && \
+    npm i -g npm && npm i && npm audit fix && \
+    shards install --ignore-crystal-version
 
 FROM build AS release
-RUN npm run compile && \
-    npm run transpile && \
+COPY . .
+RUN npm run build && \
     npm run uglify && \
     crystal build --no-debug --release --static --stats -o /build/app src/socket_canvas.cr
 

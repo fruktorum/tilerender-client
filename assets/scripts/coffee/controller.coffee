@@ -2,23 +2,20 @@ class Controller
 	rjust = (string, width, padding) ->
 		padding ||= ' '
 		padding = padding.substr 0, 1
-		if string.length < width
-			padding.repeat( width - string.length ) + string
-		else
-			string
+		if string.length < width then padding.repeat( width - string.length ) + string else string
 
 	rgbToHex = (command, start) ->
 		red = command[ start ]
 		green = command[ start + 1 ]
 		blue = command[ start + 2 ]
-
 		"\##{ rjust red.toString( 16 ), 2, '0' }#{ rjust green.toString( 16 ), 2, '0' }#{ rjust blue.toString( 16 ), 2, '0' }"
 
-	open = -> console.log 'Socket connected.'
+	open = -> console.log 'Socket connected.'; return
 
 	close = (event) ->
 		console.log if event.wasClean then 'Connection successfully closed.' else 'Connection terminated.'
 		console.log "Code: #{ event.code }; reason: #{ event.reason }"
+		return
 
 	constructor: ->
 		host = window.location.href.split( '//' )[ 1 ].split( ':' )[ 0 ]
@@ -61,3 +58,5 @@ class Controller
 					x = command[ 1 ] * 256 + command[ 2 ]
 					y = command[ 3 ] * 256 + command[ 4 ]
 					@removeEntityCommand x, y
+
+		return
