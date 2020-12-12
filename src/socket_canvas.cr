@@ -7,6 +7,11 @@ HTML_SCRIPT_FINISH = "</script>"
 HTML_BODY_START = "</head><body>"
 HTML_BODY_FINISH = "</body></html>"
 
+HTML_BODY = String.build{|string|
+	string << %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
+	string << %q[<div id="text" style="position:absolute;left:10px;bottom:10px;width:100%;height:60px;box-sizing:border-box;border:1px solid grey"></div>]
+}
+
 HTML_404 = String.build{|string|
 	string << HTML_HEADERS
 	string << HTML_BODY_START
@@ -21,9 +26,7 @@ HTML_404 = String.build{|string|
 		string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:true};"
 		string << {{ read_file "assets/scripts/js/main.js" }}
 		string << HTML_SCRIPT_FINISH
-		string << HTML_BODY_START
-		string << %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
-		string << HTML_BODY_FINISH
+		string << HTML_BODY_START << HTML_BODY << HTML_BODY_FINISH
 	}
 
 	macro html_success_answer
@@ -39,7 +42,7 @@ HTML_404 = String.build{|string|
 			status = Process.run "npm", \\%w[run build], output: stdout, error: stderr
 
 			if status.success?
-				body = %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
+				body = HTML_BODY
 
 				string << HTML_SCRIPT_START
 				string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:false};"

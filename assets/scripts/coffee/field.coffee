@@ -26,10 +26,30 @@ class Field
 	constructor: (@canvas) ->
 		@field = @canvas.getContext '2d'
 		@backgroundTiles = []
+		@foregroundTiles = []
 		@width = @height = @tileWidth = @tileHeight = 0
+
+		window.onresize = =>
+			backgroundTilesCache = @backgroundTiles
+			foregroundTilesCache = @foregroundTiles
+
+			@updateDimensions @width, @height
+
+			for row, y in backgroundTilesCache
+				if row
+					for color, x in row
+						@updateBackground x, y, color if color
+
+			for row, y in foregroundTilesCache
+				if row
+					for color, x in row
+						@addEntity x, y, color if color
+
+			return
 
 	resetField: =>
 		@backgroundTiles = []
+		@foregroundTiles = []
 
 		@field.fillStyle = DefaultColor
 		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight for y in [ 0 ... @height ] for x in [ 0 ... @width ]
@@ -46,16 +66,20 @@ class Field
 		return indexError 'Dimensions', @width, @height, @width, @height if @width <= 0 || @height <= 0
 
 		@backgroundTiles = []
+		@foregroundTiles = []
+
+		correctedHeight = window.innerHeight - 65
 
 		widthDelta = Math.floor window.innerWidth / @width
-		heightDelta = Math.floor window.innerHeight / @height
+		heightDelta = Math.floor correctedHeight / @height
 
 		if widthDelta > heightDelta
-			@tileHeight = Math.floor ( window.innerHeight - 20 ) / @height
-			@tileWidth = Math.floor ( window.innerHeight - 20 ) / @height
+			@tileHeight = Math.floor ( correctedHeight - 20 ) / @height
+			@tileWidth = Math.floor ( correctedHeight - 20 ) / @height
 		else
+			correctedHeight = window.innerWidth - 80
 			@tileWidth = Math.floor ( window.innerWidth - 20 ) / @width
-			@tileHeight = Math.floor ( window.innerWidth - 20 ) / @width
+			@tileHeight = Math.floor ( correctedHeight - 20 ) / @width
 
 		@tileWidth = Math.max @tileWidth, 1
 		@tileHeight = Math.max @tileHeight, 1
@@ -102,6 +126,9 @@ class Field
 		@field.fillStyle = color
 		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight
 
+		@foregroundTiles[ y ] ||= []
+		@foregroundTiles[ y ][ x ] = color
+
 		console.log 'Draw entity', x: x, y: y, color: color unless window.Config.production
 		return
 
@@ -110,6 +137,9 @@ class Field
 
 		@field.fillStyle = @backgroundTiles[ y ] && @backgroundTiles[ y ][ x ] || DefaultColor
 		@field.fillRect x * @tileWidth + 1, y * @tileHeight + 1, @rectWidth, @rectHeight
+
+		@foregroundTiles[ y ] ||= []
+		@foregroundTiles[ y ][ x ] = null
 
 		console.log 'Clear tile', x, y if log
 		return

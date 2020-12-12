@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   dev:
@@ -9,6 +9,8 @@ services:
     ports: [ '9000:80' ]
     volumes: [ '.:/app' ]
     depends_on: [ wsproxy ]
+    logging:
+      driver: none
     environment:
       WS_PORT: 3300
 
