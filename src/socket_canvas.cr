@@ -7,9 +7,18 @@ HTML_SCRIPT_FINISH = "</script>"
 HTML_BODY_START = "</head><body>"
 HTML_BODY_FINISH = "</body></html>"
 
+HTML_CSS = String.build{|string|
+	string << "<style>"
+	string << "#field{position:absolute;left:10px;top:10px}"
+	string << "#text{position:absolute;left:10px;bottom:10px;right:10px;height:60px;box-sizing:border-box;border:1px solid grey;overflow-y:scroll}"
+	string << "#text span{display:block;overflow-wrap:break-word}"
+	string << "#text span:nth-child(even){background-color:lightyellow}"
+	string << "</style>"
+}
+
 HTML_BODY = String.build{|string|
-	string << %q[<canvas id="field" style="position:absolute;left:10px;top:10px"></canvas>]
-	string << %q[<div id="text" style="position:absolute;left:10px;bottom:10px;width:100%;height:60px;box-sizing:border-box;border:1px solid grey"></div>]
+	string << %q[<canvas id="field"></canvas>]
+	string << %q[<div id="text"></div>]
 }
 
 HTML_404 = String.build{|string|
@@ -26,6 +35,7 @@ HTML_404 = String.build{|string|
 		string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:true};"
 		string << {{ read_file "assets/scripts/js/main.js" }}
 		string << HTML_SCRIPT_FINISH
+		string << HTML_CSS
 		string << HTML_BODY_START << HTML_BODY << HTML_BODY_FINISH
 	}
 
@@ -39,20 +49,20 @@ HTML_404 = String.build{|string|
 
 			stdout = IO::Memory.new
 			stderr = IO::Memory.new
-			status = Process.run "npm", \\%w[run build], output: stdout, error: stderr
+			status = Process.run "npm", %w[run build], output: stdout, error: stderr
 
 			if status.success?
 				body = HTML_BODY
 
 				string << HTML_SCRIPT_START
-				string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:false};"
+				string << %Q[window.Config={wsPort:"#{ ENV[ "WS_PORT" ] }",production:false};]
 				string << File.read( "assets/scripts/js/main.js" )
 				string << HTML_SCRIPT_FINISH
 			else
-				body = "<code style=\"white-space:pre-wrap\">#{ stderr }</code>"
+				body = %Q[<code style="white-space:pre-wrap">#{ stderr }</code>]
 			end
 
-			string << HTML_BODY_START << body << HTML_BODY_FINISH
+			string << HTML_CSS << HTML_BODY_START << body << HTML_BODY_FINISH
 		}
 	end
 {% end %}

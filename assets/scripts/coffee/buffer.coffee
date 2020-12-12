@@ -16,6 +16,7 @@ class Buffer
 					when 3 then @readCount = 7
 					when 4 then @readCount = 7
 					when 5 then @readCount = 4
+					when 6 then @readCount = view.getUint8( index + 1 ) + 1
 
 				if @readCount > 0
 					@currentCommand.push @lastCommandCode
