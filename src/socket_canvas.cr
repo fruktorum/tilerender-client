@@ -9,7 +9,8 @@ HTML_BODY_FINISH = "</body></html>"
 
 HTML_CSS = String.build{|string|
 	string << "<style>"
-	string << "#field{position:absolute;left:10px;top:10px}"
+	string << "#wrapper{position:absolute;left:10px;top:10px;right:10px;bottom:80px;overflow:scroll}"
+	string << "#field{position:relative}"
 	string << "#text{position:absolute;left:10px;bottom:10px;right:10px;height:60px;box-sizing:border-box;border:1px solid grey;overflow-y:scroll}"
 	string << "#text span{display:block;overflow-wrap:break-word}"
 	string << "#text span:nth-child(even){background-color:lightyellow}"
@@ -17,7 +18,7 @@ HTML_CSS = String.build{|string|
 }
 
 HTML_BODY = String.build{|string|
-	string << %q[<canvas id="field"></canvas>]
+	string << %q[<div id="wrapper"><canvas id="field"></canvas></div>]
 	string << %q[<div id="text"></div>]
 }
 

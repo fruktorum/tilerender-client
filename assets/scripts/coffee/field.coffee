@@ -2,7 +2,9 @@ class Field
 	TileDensityThreshold = 4
 	DefaultColor = '#ffffff'
 
-	indexError = (entityType, x, y, width, height) -> console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"; return
+	indexError = (entityType, x, y, width, height) ->
+		console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"
+		return
 
 	borders = (canvas, field) ->
 		field.fillStyle = '#808080'
@@ -68,18 +70,19 @@ class Field
 		@backgroundTiles = []
 		@foregroundTiles = []
 
-		correctedHeight = window.innerHeight - 65
+		element = @canvas.parentElement
 
-		widthDelta = Math.floor window.innerWidth / @width
-		heightDelta = Math.floor correctedHeight / @height
+		widthDelta = Math.floor element.clientWidth / @width
+		heightDelta = Math.floor element.clientHeight / @height
 
 		if widthDelta > heightDelta
-			@tileHeight = Math.floor ( correctedHeight - 20 ) / @height
-			@tileWidth = Math.floor ( correctedHeight - 20 ) / @height
+			correctedHeight = element.clientHeight - 4
+			@tileHeight = Math.floor correctedHeight / @height
+			@tileWidth = Math.floor correctedHeight / @height
 		else
-			correctedHeight = window.innerWidth - 80
-			@tileWidth = Math.floor ( window.innerWidth - 20 ) / @width
-			@tileHeight = Math.floor ( correctedHeight - 20 ) / @width
+			correctedWidth = element.clientWidth - 4
+			@tileWidth = Math.floor correctedWidth / @width
+			@tileHeight = Math.floor correctedWidth / @width
 
 		@tileWidth = Math.max @tileWidth, 1
 		@tileHeight = Math.max @tileHeight, 1
