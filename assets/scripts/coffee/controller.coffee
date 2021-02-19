@@ -59,8 +59,8 @@ class Controller
 					y = command[ 3 ] * 256 + command[ 4 ]
 					@removeEntityCommand x, y
 				when 6
-					textSize = command[ 1 ]
-					message = command[ 2 .. 2 + textSize ]
+					textSize = command[ 1 ] * 256 + command[ 2 ]
+					message = command[ 3 .. 3 + textSize ]
 					@addMessageCommand String.fromCharCode.apply null, message
 
 		return

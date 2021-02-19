@@ -11,7 +11,7 @@ FROM build AS release
 COPY . .
 RUN npm run build && \
     npm run uglify && \
-    crystal build --no-debug --release --static --stats -o /build/app src/socket_canvas.cr
+    crystal build --no-debug --release --static --stats -D preview_mt -o /build/app src/socket_canvas.cr
 
 FROM scratch
 CMD [ "/app" ]
