@@ -68,16 +68,13 @@ HTML_404 = String.build{|string|
 	end
 {% end %}
 
-macro error_404( context )
-end
-
 server = HTTP::Server.new do |context|
+	context.response.content_type = "text/html"
+
 	if context.request.path == "/"
-		context.response.content_type = "text/html"
 		context.response.print html_success_answer
 	else
 		context.response.status = HTTP::Status::NOT_FOUND
-		context.response.content_type = "text/html"
 		context.response.print HTML_404
 	end
 end
