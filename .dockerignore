@@ -15,6 +15,7 @@ Thumbs.db
 .env*
 .git*
 .shards
+.travis.yml
 
 **/*.dwarf
 **/*.md
