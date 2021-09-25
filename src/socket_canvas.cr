@@ -82,9 +82,10 @@ server = HTTP::Server.new do |context|
 
 	case context.request.path
 	when "/"
+		result = html_success_answer
 		context.response.content_type = "text/html"
-		context.response.content_length = html_success_answer.size
-		context.response.print html_success_answer
+		context.response.content_length = result.size
+		context.response.print result
 	when /^\/fonts/
 		filename = {% if flag? :release %} ".#{ context.request.path }" {% else %} "assets#{ context.request.path }" {% end %}
 
