@@ -14,12 +14,12 @@ HTML_CSS = String.build{|string|
 	string << "#field{position:relative}"
 	string << "#overlay{position:absolute;left:0;top:0;width:100%;height:100%;background-color:#edf0ee;opacity:.7}"
 	string << "#overlay.hidden{display:none}"
-	string << "#text{position:absolute;left:10px;right:10px;height:60px;box-sizing:border-box;border:1px solid grey;overflow-y:scroll;font-family:\"Victor Mono\";font-size:.8rem;background-color:#ffffff}"
+	string << "#text{position:absolute;left:10px;right:10px;height:57px;box-sizing:border-box;border:1px solid grey;overflow-y:scroll;font-family:\"Victor Mono\";font-size:.8rem;background-color:#ffffff}"
 	string << "#text.normal{bottom:10px}"
 	string << "#text.fullscreen{top:50px;left:50px;right:50px;border-radius:10px;padding:5px}"
 	string << "#text span{display:block;overflow-wrap:break-word}"
-	string << "#text span:nth-child(even){background-color:#f8efd2}"
-	string << "#text span:nth-child(odd){background-color:#f5e8b8}"
+	string << "#text span.even{background-color:#f8efd2}"
+	string << "#text span.odd{background-color:#f5e8b8}"
 	string << "</style>"
 }
 

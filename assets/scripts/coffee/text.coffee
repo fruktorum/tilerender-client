@@ -3,6 +3,7 @@ class Text
 
 	constructor: (@textField, @overlay) ->
 		@fullscreen = false
+		@lineIndex = 0
 
 		@textField.addEventListener 'pointerdown', @pointerDownHandler
 		@textField.addEventListener 'pointerup', @clickHandler
@@ -14,11 +15,14 @@ class Text
 
 		span = document.createElement 'span'
 		span.innerHTML = message
+		span.classList.add if @lineIndex == 0 then 'even' else 'odd'
 
 		@textField.appendChild span
 		do @textField.children[ 0 ].remove if @textField.children.length > MaxStrings
 
 		@textField.scrollTop = @textField.scrollHeight
+
+		@lineIndex ^= 1
 
 		return
 
@@ -50,3 +54,5 @@ class Text
 		@fullscreen = false
 
 		return
+
+	resize: => @textField.style.height = "#{ window.innerHeight - 100 }px" if @fullscreen

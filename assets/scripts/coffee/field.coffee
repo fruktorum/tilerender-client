@@ -31,24 +31,6 @@ class Field
 		@foregroundTiles = []
 		@width = @height = @tileWidth = @tileHeight = 0
 
-		window.onresize = =>
-			backgroundTilesCache = @backgroundTiles
-			foregroundTilesCache = @foregroundTiles
-
-			@updateDimensions @width, @height
-
-			for row, y in backgroundTilesCache
-				if row
-					for color, x in row
-						@updateBackground x, y, color if color
-
-			for row, y in foregroundTilesCache
-				if row
-					for color, x in row
-						@addEntity x, y, color if color
-
-			return
-
 	resetField: =>
 		@backgroundTiles = []
 		@foregroundTiles = []
@@ -145,4 +127,22 @@ class Field
 		@foregroundTiles[ y ][ x ] = null
 
 		console.log 'Clear tile', x, y if log
+		return
+
+	resize: =>
+		backgroundTilesCache = @backgroundTiles
+		foregroundTilesCache = @foregroundTiles
+
+		@updateDimensions @width, @height
+
+		for row, y in backgroundTilesCache
+			if row
+				for color, x in row
+					@updateBackground x, y, color if color
+
+		for row, y in foregroundTilesCache
+			if row
+				for color, x in row
+					@addEntity x, y, color if color
+
 		return

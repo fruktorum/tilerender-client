@@ -10,4 +10,10 @@ window.onload = -> (->
 	@removeEntityCommand = field.clearTile
 
 	@addMessageCommand = text.addMessage
+
+	window.onresize = ->
+		do field.resize
+		do text.resize
+
+	return
 ).call new Controller
