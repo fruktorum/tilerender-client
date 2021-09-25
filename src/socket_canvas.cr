@@ -1,7 +1,7 @@
 require "http/server"
 require "./version"
 
-HTML_HEADERS = "<!DOCTYPE html><html><head><title>Graphics on Sockets!</title>"
+HTML_HEADERS = "<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Graphics on Sockets!</title>"
 HTML_SCRIPT_START = %q[<script type="text/javascript">]
 HTML_SCRIPT_FINISH = "</script>"
 HTML_BODY_START = "</head><body>"
