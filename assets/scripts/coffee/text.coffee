@@ -2,7 +2,9 @@ class Text
 	MaxStrings = 200
 
 	constructor: (@textField, @overlay) ->
-		@textField.addEventListener 'pointerdown', @pointerDown
+		@fullscreen = false
+
+		@textField.addEventListener 'pointerdown', @pointerDownHandler
 		@textField.addEventListener 'pointerup', @clickHandler
 		@overlay.addEventListener 'pointerup', @overlayHandler
 
@@ -20,30 +22,31 @@ class Text
 
 		return
 
-	pointerDown: (event) =>
+	pointerDownHandler: (event) =>
 		@downTime = new Date
 		return
 
 	clickHandler: (event) =>
-		if @downTime && new Date - @downTime < 200
+		if !@fullscreen && new Date - @downTime < 200
 			@textField.classList.remove 'normal'
 			@textField.classList.add 'fullscreen'
 			@textField.style.height = "#{ window.innerHeight - 100 }px"
+			@textField.scrollTop = @textField.scrollHeight
 
 			@overlay.classList.remove 'hidden'
 
-			@textField.scrollTop = @textField.scrollHeight
+			@fullscreen = true
 
 		return
 
 	overlayHandler: (event) =>
 		@textField.removeAttribute 'style'
+		@textField.classList.remove 'fullscreen'
+		@textField.classList.add 'normal'
+		@textField.scrollTop = @textField.scrollHeight
 
 		@overlay.classList.add 'hidden'
 
-		@textField.classList.remove 'fullscreen'
-		@textField.classList.add 'normal'
-
-		@textField.scrollTop = @textField.scrollHeight
+		@fullscreen = false
 
 		return

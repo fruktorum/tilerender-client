@@ -15,4 +15,5 @@ RUN npm run build && \
 
 FROM scratch
 CMD [ "/app" ]
+COPY --from=release /app/assets/fonts /fonts
 COPY --from=release /build/app /app
