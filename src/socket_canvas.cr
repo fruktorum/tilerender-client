@@ -12,8 +12,9 @@ HTML_CSS = String.build{|string|
 	string << "#wrapper{position:absolute;left:10px;top:10px;right:10px;bottom:80px;overflow:scroll}"
 	string << "#field{position:relative}"
 	string << "#text{position:absolute;left:10px;bottom:10px;right:10px;height:60px;box-sizing:border-box;border:1px solid grey;overflow-y:scroll}"
-	string << "#text span{display:block;overflow-wrap:break-word}"
-	string << "#text span:nth-child(even){background-color:lightyellow}"
+	string << "#text span{display:block;overflow-wrap:break-word;font-family:monospace}"
+	string << "#text span:nth-child(even){background-color:#f8efd2}"
+	string << "#text span:nth-child(odd){background-color:#f5e8b8}"
 	string << "</style>"
 }
 

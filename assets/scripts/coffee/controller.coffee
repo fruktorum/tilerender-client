@@ -61,6 +61,6 @@ class Controller
 				when 6
 					textSize = command[ 1 ] * 256 + command[ 2 ]
 					message = command[ 3 .. 3 + textSize ]
-					@addMessageCommand String.fromCharCode.apply null, message
+					@addMessageCommand decodeURIComponent escape String.fromCharCode.apply null, message # What?! UTF-8...
 
 		return
