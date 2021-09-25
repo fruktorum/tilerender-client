@@ -1,6 +1,6 @@
 window.onload = -> (->
 	field = new Field document.getElementById 'field'
-	text = new Text document.getElementById 'text'
+	text = new Text document.getElementById( 'text' ), document.getElementById( 'overlay' )
 
 	@resetFieldCommand = field.resetField
 	@clearFieldCommand = field.clearField
