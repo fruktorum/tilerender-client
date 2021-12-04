@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "Socket Graphics",
+  "description": "Tilerender Client",
   "main": "assets/scripts/js/main.js",
   "scripts": {
     "build": "cat assets/scripts/coffee/*.coffee | coffee -sct > assets/scripts/js/main.js",

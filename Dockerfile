@@ -1,5 +1,7 @@
-FROM <find_an_Alpine_Crystal_or_build_it> AS build
+FROM crystallang/crystal:1.2.2-alpine AS build
+WORKDIR /app
 CMD [ "sh" ]
+
 RUN apk --no-cache add npm
 
 COPY shard.* package*.json ./
@@ -11,7 +13,7 @@ FROM build AS release
 COPY . .
 RUN npm run build && \
     npm run uglify && \
-    crystal build --no-debug --release --static --stats -D preview_mt -o /build/app src/socket_canvas.cr
+    crystal build --no-debug --release --static --stats -D preview_mt -o /build/app src/tilerender-client.cr
 
 FROM scratch
 CMD [ "/app" ]

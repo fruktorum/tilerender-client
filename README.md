@@ -1,4 +1,4 @@
-# Socket Graphics - Client-Side
+# TileRender - Client-Side
 
 Renders graphics based on websocket binary commands into the canvas.
 
@@ -44,7 +44,7 @@ Do not start `app` and `dev` services simultaneously, they are interchangeable.
 
 ## Contributing
 
-1. Clone it
+1. Fork it (<https://github.com/fruktorum/tilerender-client/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

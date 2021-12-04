@@ -7,7 +7,6 @@
 *.dwarf
 
 core
-Dockerfile
 Thumbs.db
 
 .DS_Store

@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   dev:
-    image: socket-iface-client:dev
+    image: tilerender-client:dev
     build:
       context: .
       target: build
@@ -15,7 +15,7 @@ services:
       WS_PORT: 3300
 
   app:
-    image: socket-iface-client
+    image: tilerender-client
     build: .
     init: true
     ports: [ '9000:80' ]
@@ -24,7 +24,7 @@ services:
       WS_PORT: 3300
 
   wsproxy:
-    image: socket-iface-client/wsproxy
+    image: tilerender-client/wsproxy
     build: websockify
     ports: [ '3300:3300' ]
     networks: [ websockify ]

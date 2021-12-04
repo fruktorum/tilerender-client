@@ -1,12 +1,14 @@
-name: socket-iface-client
-version: 0.1.0
-crystal: 1.1.0-dev
+name: tilerender-client
+description: Renders graphics based on websocket binary commands into the canvas
+
+version: 1.0.0
+crystal: 1.2.2
 
 authors:
   - SlayerShadow <gawfast@gmail.com>
 
 targets:
-  socket-canvas:
-    main: src/socket_canvas.cr
+  tilerender-client:
+    main: src/tilerender-client.cr
 
 license: MIT
