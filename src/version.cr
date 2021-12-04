@@ -1,5 +1,3 @@
-module Snake::Canvas
-
-	VERSION = "0.1.0"
-
+module TilerenderClient
+  VERSION = "1.0.0"
 end
