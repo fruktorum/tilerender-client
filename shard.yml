@@ -2,7 +2,7 @@ name: tilerender-client
 description: Renders graphics based on websocket binary commands into the canvas
 
 version: 1.0.0
-crystal: 1.2.2
+crystal: 1.3.0
 
 authors:
   - SlayerShadow <gawfast@gmail.com>
