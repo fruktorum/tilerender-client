@@ -1,5 +1,5 @@
 class Text
-	MaxStrings = 200
+	MaxStrings = 1000
 
 	constructor: (@textField, @overlay) ->
 		@fullscreen = false
