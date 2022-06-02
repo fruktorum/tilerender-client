@@ -14,7 +14,7 @@ HTML_CSS = String.build { |string|
   string << "#field{position:relative}"
   string << "#overlay{position:absolute;left:0;top:0;width:100%;height:100%;background-color:#edf0ee;opacity:.7}"
   string << "#overlay.hidden{display:none}"
-  string << "#text{position:absolute;left:10px;right:10px;height:57px;box-sizing:border-box;border:1px solid grey;border-radius:10px 5px 5px 10px;padding:0 5px;overflow-y:scroll;font-family:\"Victor Mono\";font-size:.8rem;background-color:#fff8eb}"
+  string << "#text{position:absolute;left:10px;right:10px;height:4.5rem;box-sizing:border-box;border:1px solid grey;border-radius:10px 5px 5px 10px;padding:0 5px;overflow-y:scroll;font-family:\"Victor Mono\";font-size:1rem;background-color:#fff8eb}"
   string << "#text::-webkit-scrollbar-track{box-shadow:inset 0 0 6px rgba(0,0,0,.7);border-radius:10px;background-color:#fcf8e8}"
   string << "#text::-webkit-scrollbar{width:12px;background-color:#f5f5f5;border-radius:10px}"
   string << "#text::-webkit-scrollbar-thumb{border-radius:10px;background-color:#d7005f;background-image:linear-gradient(0,transparent,rgba(0,0,0,.4) 50%,transparent,transparent)}"
