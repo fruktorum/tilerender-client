@@ -1,4 +1,4 @@
-class Buffer
+export default class Buffer
 	constructor: ->
 		@commandsBuffer = []
 		@currentCommand = []
@@ -19,6 +19,7 @@ class Buffer
 					when 4 then @readCount = 7
 					when 5 then @readCount = 4
 					when 6 then [ @readCount, @state ] = [ 2, 'reading' ]
+					when 7 then @readCount = 1
 
 				if @readCount > 0
 					@currentCommand.push @lastCommandCode

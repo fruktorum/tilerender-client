@@ -1,14 +1,10 @@
 name: tilerender-client
 description: Renders graphics based on websocket binary commands into the canvas
 
-version: 1.0.0
+version: 1.1.0
 crystal: 1.4.1
 
 authors:
   - SlayerShadow <gawfast@gmail.com>
-
-targets:
-  tilerender-client:
-    main: src/tilerender-client.cr
 
 license: MIT

@@ -1,22 +1,24 @@
-class Controller
-	rjust = (string, width, padding) ->
-		padding ||= ' '
-		padding = padding.substr 0, 1
-		if string.length < width then padding.repeat( width - string.length ) + string else string
+import Buffer from './buffer'
 
-	rgbToHex = (command, start) ->
-		red = command[ start ]
-		green = command[ start + 1 ]
-		blue = command[ start + 2 ]
-		"\##{ rjust red.toString( 16 ), 2, '0' }#{ rjust green.toString( 16 ), 2, '0' }#{ rjust blue.toString( 16 ), 2, '0' }"
+rjust = (string, width, padding) ->
+	padding ||= ' '
+	padding = padding.substr 0, 1
+	if string.length < width then padding.repeat( width - string.length ) + string else string
 
-	open = -> console.log 'Socket connected.'; return
+rgbToHex = (command, start) ->
+	red = command[ start ]
+	green = command[ start + 1 ]
+	blue = command[ start + 2 ]
+	"\##{ rjust red.toString( 16 ), 2, '0' }#{ rjust green.toString( 16 ), 2, '0' }#{ rjust blue.toString( 16 ), 2, '0' }"
 
-	close = (event) ->
-		console.log if event.wasClean then 'Connection successfully closed.' else 'Connection terminated.'
-		console.log "Code: #{ event.code }; reason: #{ event.reason }"
-		return
+open = -> console.log 'Socket connected.'; return
 
+close = (event) ->
+	console.log if event.wasClean then 'Connection successfully closed.' else 'Connection terminated.'
+	console.log "Code: #{ event.code }; reason: #{ event.reason }"
+	return
+
+export default class Controller
 	constructor: ->
 		host = window.location.href.split( '//' )[ 1 ].split( ':' )[ 0 ]
 
@@ -62,5 +64,6 @@ class Controller
 					textSize = command[ 1 ] * 256 + command[ 2 ]
 					message = command[ 3 .. 3 + textSize ]
 					@addMessageCommand decodeURIComponent escape String.fromCharCode.apply null, message # What?! UTF-8...
+				when 7 then @toggleLinesCommand command[ 1 ] == 1
 
 		return

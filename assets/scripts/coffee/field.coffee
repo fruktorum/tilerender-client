@@ -1,35 +1,36 @@
-class Field
-	TileDensityThreshold = 4
-	DefaultColor = '#ffffff'
+TileDensityThreshold = 4
+DefaultColor = '#ffffff'
 
-	indexError = (entityType, x, y, width, height) ->
-		console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"
-		return
+indexError = (entityType, x, y, width, height) ->
+	console.error "#{ entityType } index out of bounds: (#{ x }, #{ y }) > (#{ width - 1 }, #{ height - 1 })"
+	return
 
-	borders = (canvas, field) ->
-		field.fillStyle = '#808080'
-		do field.beginPath
-		field.moveTo 0, 0
-		field.lineTo 0, canvas.height
-		field.lineTo canvas.width, canvas.height
-		field.lineTo canvas.width, 0
-		field.lineTo 0, 0
-		do field.stroke
-		return
+borders = (canvas, field) ->
+	field.strokeStyle = '#808080'
+	do field.beginPath
+	field.moveTo 0, 0
+	field.lineTo 0, canvas.height
+	field.lineTo canvas.width, canvas.height
+	field.lineTo canvas.width, 0
+	field.lineTo 0, 0
+	do field.stroke
+	return
 
-	line = (field, startX, startY, finishX, finishY, color) ->
-		field.fillStyle = color
-		do field.beginPath
-		field.moveTo startX, startY
-		field.lineTo finishX, finishY
-		do field.stroke
-		return
+line = (field, startX, startY, finishX, finishY, color) ->
+	field.strokeStyle = color
+	do field.beginPath
+	field.moveTo startX, startY
+	field.lineTo finishX, finishY
+	do field.stroke
+	return
 
+export default class Field
 	constructor: (@canvas) ->
 		@field = @canvas.getContext '2d'
 		@backgroundTiles = []
 		@foregroundTiles = []
 		@width = @height = @tileWidth = @tileHeight = 0
+		@drawLines = true
 
 	resetField: =>
 		@backgroundTiles = []
@@ -54,23 +55,23 @@ class Field
 
 		element = @canvas.parentElement
 
-		widthDelta = Math.floor element.clientWidth / @width
-		heightDelta = Math.floor element.clientHeight / @height
+		widthDelta = element.clientWidth // @width
+		heightDelta = element.clientHeight // @height
 
 		if widthDelta > heightDelta
 			correctedHeight = element.clientHeight - 4
-			@tileHeight = Math.floor correctedHeight / @height
-			@tileWidth = Math.floor correctedHeight / @height
+			@tileHeight = correctedHeight // @height
+			@tileWidth = correctedHeight // @height
 		else
 			correctedWidth = element.clientWidth - 4
-			@tileWidth = Math.floor correctedWidth / @width
-			@tileHeight = Math.floor correctedWidth / @width
+			@tileWidth = correctedWidth // @width
+			@tileHeight = correctedWidth // @width
 
 		@tileWidth = Math.max @tileWidth, 1
 		@tileHeight = Math.max @tileHeight, 1
 
-		offsetX = if @tileWidth > TileDensityThreshold then 1 else 0
-		offsetY = if @tileHeight > TileDensityThreshold then 1 else 0
+		offsetX = if @drawLines && @tileWidth > TileDensityThreshold then 1 else 0
+		offsetY = if @drawLines && @tileHeight > TileDensityThreshold then 1 else 0
 
 		@canvas.width = @tileWidth * @width + 2 - offsetX * 2
 		@canvas.height = @tileHeight * @height + 2 - offsetY * 2
@@ -80,15 +81,16 @@ class Field
 
 		borders @canvas, @field
 
-		if @tileWidth > TileDensityThreshold
-			for position in [ 1 ... @width ]
-				delimiter = @tileWidth * position
-				line @field, delimiter, 0, delimiter, @canvas.height, '#808080'
+		if @drawLines
+			if @tileWidth > TileDensityThreshold
+				for position in [ 1 ... @width ]
+					delimiter = @tileWidth * position
+					line @field, delimiter, 0, delimiter, @canvas.height, '#707070'
 
-		if @tileHeight > TileDensityThreshold
-			for position in [ 1 ... @height ]
-				delimiter = @tileHeight * position
-				line @field, 0, delimiter, @canvas.width, delimiter, '#808080'
+			if @tileHeight > TileDensityThreshold
+				for position in [ 1 ... @height ]
+					delimiter = @tileHeight * position
+					line @field, 0, delimiter, @canvas.width, delimiter, '#707070'
 
 		console.log 'Field dimensions reset', @width, @height unless window.Config.production
 		return
@@ -127,6 +129,11 @@ class Field
 		@foregroundTiles[ y ][ x ] = null
 
 		console.log 'Clear tile', x, y if log
+		return
+
+	toggleLines: (value) =>
+		@drawLines = value
+		@updateDimensions @width, @height if @width > 0 && @height > 0
 		return
 
 	resize: =>

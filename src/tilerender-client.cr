@@ -59,7 +59,7 @@ HTML_404 = String.build { |string|
 
       stdout = IO::Memory.new
       stderr = IO::Memory.new
-      status = Process.run "npm", %w[run build], output: stdout, error: stderr
+      status = Process.run "yarn", %w[run compile], output: stdout, error: stderr
 
       if status.success?
         body = HTML_BODY

@@ -1,18 +1,25 @@
 {
-  "name": "app",
-  "version": "1.0.0",
+  "name": "tilerender",
+  "version": "1.1.0",
   "description": "Tilerender Client",
   "main": "assets/scripts/js/main.js",
   "scripts": {
-    "build": "cat assets/scripts/coffee/*.coffee | coffee -sct > assets/scripts/js/main.js",
-    "uglify": "uglifyjs assets/scripts/js/main.js --compress --mangle -o assets/scripts/js/main2.js && mv assets/scripts/js/main2.js assets/scripts/js/main.js"
+    "compile": "webpack",
+    "compile-production": "NODE_MODE=production webpack && mv assets/scripts/js/main.js assets/scripts/js/main.min.js"
   },
+  "browserslist": "> 0.25%, not dead",
   "author": "SlayerShadow",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "*",
     "@babel/preset-env": "*",
-    "coffeescript": "*",
-    "uglify-js": "*"
+    "babel-loader": "*",
+    "coffeescript": "=2.6.1",
+    "coffee-loader": "*",
+    "javascript-obfuscator": "*",
+    "terser-webpack-plugin": "*",
+    "webpack": "*",
+    "webpack-cli": "*",
+    "webpack-obfuscator": "*"
   }
 }

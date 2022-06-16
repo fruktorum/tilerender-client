@@ -1,4 +1,4 @@
-class Text
+export default class Text
 	MaxStrings = 1000
 
 	constructor: (@textField, @overlay) ->
