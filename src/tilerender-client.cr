@@ -43,7 +43,7 @@ HTML_404 = String.build { |string|
     string << HTML_HEADERS
     string << HTML_SCRIPT_START
     string << "window.Config={wsPort:\"#{ ENV[ "WS_PORT" ] }\",production:true};"
-    string << {{ read_file "assets/scripts/js/main.js" }}
+    string << {{ read_file "assets/scripts/js/main.min.js" }}
     string << HTML_SCRIPT_FINISH
     string << HTML_CSS
     string << HTML_BODY_START << HTML_BODY << HTML_BODY_FINISH
