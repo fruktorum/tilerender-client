@@ -70,11 +70,14 @@ export default class Field
 		@tileWidth = Math.max @tileWidth, 1
 		@tileHeight = Math.max @tileHeight, 1
 
-		offsetX = if @drawLines && @tileWidth > TileDensityThreshold then 1 else 0
-		offsetY = if @drawLines && @tileHeight > TileDensityThreshold then 1 else 0
+		offsetX = if @tileWidth > TileDensityThreshold then 1 else 0
+		offsetY = if @tileHeight > TileDensityThreshold then 1 else 0
 
 		@canvas.width = @tileWidth * @width + 2 - offsetX * 2
 		@canvas.height = @tileHeight * @height + 2 - offsetY * 2
+
+		offsetX = if @drawLines && offsetX == 1 then 1 else 0
+		offsetY = if @drawLines && offsetY == 1 then 1 else 0
 
 		@rectWidth = Math.max @tileWidth - offsetX * 2, 1
 		@rectHeight = Math.max @tileHeight - offsetY * 2, 1
@@ -133,7 +136,7 @@ export default class Field
 
 	toggleLines: (value) =>
 		@drawLines = value
-		@updateDimensions @width, @height if @width > 0 && @height > 0
+		do @resize if @width > 0 && @height > 0
 		return
 
 	resize: =>
