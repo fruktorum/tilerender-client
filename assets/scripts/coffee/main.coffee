@@ -3,6 +3,8 @@ import Field from './field'
 import Text from './text'
 
 window.onload = -> (->
+	addEventListener 'contextmenu', (event) -> do event.preventDefault
+
 	field = new Field document.getElementById 'field'
 	text = new Text document.getElementById( 'text' ), document.getElementById( 'overlay' )
 
