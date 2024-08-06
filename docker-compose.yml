@@ -1,13 +1,11 @@
-version: '3.9'
-
 services:
   dev:
     image: tilerender-client:dev
     build:
       context: .
       target: build
-    ports: [ '9000:80' ]
-    volumes: [ '.:/app' ]
+    ports: [ 9000:80 ]
+    volumes: [ .:/app ]
     depends_on: [ wsproxy ]
     logging:
       driver: none
@@ -18,7 +16,7 @@ services:
     image: tilerender-client
     build: .
     init: true
-    ports: [ '9000:80' ]
+    ports: [ 9000:80 ]
     depends_on: [ wsproxy ]
     environment:
       WS_PORT: 3300
@@ -26,7 +24,7 @@ services:
   wsproxy:
     image: tilerender-client/wsproxy
     build: websockify
-    ports: [ '3300:3300' ]
+    ports: [ 3300:3300 ]
     networks: [ websockify ]
     environment:
       TCP_SERVER_HOST: $TCP_SERVER_HOST

@@ -1,20 +1,19 @@
-FROM crystallang/crystal:1.8.0-alpine AS build
+FROM crystallang/crystal:1.13.1-alpine AS build
 WORKDIR /app
 CMD [ "sh" ]
 
-RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/v3.16/main\nhttp://dl-cdn.alpinelinux.org/alpine/v3.16/community" > /etc/apk/repositories && \
-    apk --no-cache update && \
+RUN apk --no-cache update && \
     apk --no-cache upgrade && \
     apk --no-cache add npm && \
-    npm i -g npm && npm i -g yarn
+    npm i -gf npm && npm i -g pnpm
 
-COPY shard.* package.json yarn.lock ./
+COPY shard.* package.json pnpm-lock.yaml ./
 RUN mkdir -p /build assets/scripts/js && \
-    yarn install && shards install
+    pnpm install && shards install
 
 FROM build AS release
 COPY . .
-RUN yarn run compile-production && \
+RUN pnpm compile-production && \
     crystal build --no-debug --release --static --stats -D preview_mt -o /build/app src/tilerender-client.cr
 
 FROM scratch

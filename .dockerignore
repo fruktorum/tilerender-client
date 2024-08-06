@@ -14,6 +14,7 @@ Thumbs.db
 .editorconfig
 .env*
 .git*
+.pnpm-store
 .shards
 .travis.yml
 
