@@ -1,0 +1,4 @@
+allowBuilds:
+  javascript-obfuscator: true
+onlyBuiltDependencies:
+  - javascript-obfuscator

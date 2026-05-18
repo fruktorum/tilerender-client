@@ -7,7 +7,7 @@ RUN apk --no-cache update && \
     apk --no-cache add npm && \
     npm i -gf npm && npm i -g pnpm
 
-COPY shard.* package.json pnpm-lock.yaml ./
+COPY shard.* package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN mkdir -p /build assets/scripts/js && \
     pnpm install && shards install
 
